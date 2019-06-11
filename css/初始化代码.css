@@ -1,0 +1,114 @@
+body,
+div,
+span,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a,
+img,
+input,
+p,
+i {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-size: 12px;
+    font-family: 'Microsoft Yahei';
+}
+
+a {
+    text-decoration: none;
+    /* 点击a标签显示透明色，不设置会显示蓝色 */
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+a:hover {
+    color: #39a030;
+}
+.active{
+    background-color: #39a030;
+}
+
+img {
+    vertical-align: middle;
+    border: none;
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+i {
+    font-style: normal;
+}
+
+input {
+    border: none;
+    outline: none;
+}
+
+/* 清除浮动 */
+/* .clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+} */
+
+/* 清楚浮动，解决margin-top塌陷 */
+.clearfix::before,
+.clearfix::after {
+    content: '.';
+    display: table;
+}
+
+.clearfix::after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
+}
+
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+.w {
+    width: 1206px;
+}
+
+.footW {
+    width: 950px;
+}
+/* @media (max-width:960px){
+    .con{
+        width:100%;
+    }
+}
+@media (max-width:850px){
+   .box{
+       width:30%;
+       margin:10px 1.65%;
+   }
+} */
