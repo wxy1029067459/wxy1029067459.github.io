@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>网易教育</title>
+    <link rel="stylesheet" href="./css/初始化代码.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./font/iconfont.css">
+    <link rel="stylesheet" href="./css/swiper.min.css">
+    <base target="_blank" />
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="login">
+            <div class="login_web">
+                <span class="cha iconfont icon-cha fr" id="close_login"></span>
+                <p>登录网易云课堂</p>
+                <input type="text" placeholder="账号" class="zh" id="userName">
+                <h6 class="h6">您输入的账号有误！</h6>
+                <input type="password" placeholder="密码" class="pd" id="password">
+                <h6 class="h7">您输入的密码有误！</h6>
+                <input type="button" value="登 录" id="denglu">
+            </div>
+        </div>
+        <div class="black">
+            <div class="video_zz">
+                <span class="cha iconfont icon-cha fr" id="close_video"></span>
+                <h2>请观看下面的视频</h2>
+                <div class="video_box">
+                    <video src="http://mov.bn.netease.com/open-movie/nos/mp4/2014/12/30/SADQ86F5S_shd.mp4"
+                        controls="controls"></video>
+                </div>
+            </div>
+        </div>
+        <div class="top">
+            <div class="w">
+                <p class="fl">网易云课堂微专业，帮助你掌握专业技能，令你求职或加薪多一份独特优势！</p>
+                <a href="javascript:" class="green fl"> 立即查看></a>
+                <span class="close fr iconfont icon-cha"> 不再提醒</span>
+            </div>
+        </div>
+        <div class="header">
+            <div class="w">
+                <h1 class="fl edu">EDU </h1>
+                <span class="fl xian">|</span>
+                <h2 class="fl title"> 网易教育产品部</h2>
+                <div class="jiaguan fl">
+                    <button class="fl iconfont icon-jia" id="login">关注</button>
+                    <span>粉丝 45</span>
+                </div>
+                <div class="quguan fl">
+                    <div class="kuang">
+                        <p class="fl iconfont icon-gou1">已关注 </p>
+                        <span>|</span>
+                        <a href="javascript:"> 取消</a>
+                    </div>
+                </div>
+                <ul class="fr">
+                    <li class="fl"><a href="http://open.163.com/">网易公开课</a></li>
+                    <li class="fl"><a href="http://study.163.com">云课堂</a></li>
+                    <li class="fl"><a href="http://www.icourse163.org">中国大学MOOC</a></li>
+                    <li class="fr"><a href="javascript:" class="iconfont icon-fangdajing"></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <a href="http://open.163.com"></a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="http://study.163.com"></a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="http://www.icourse163.org"></a>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+        <div class="lesson">
+            <div class="w">
+                <div class="left box">
+                    <div class="icon fl">
+                        <div class="pic"></div>
+                    </div>
+                    <div class="words fl">
+                        <div class="title">网易公开课</div>
+                        <div class="content">推出国内外名校公开课，涉及广泛的学科，名校老师认真讲解深度剖析，网易视频公开课频道搭建起强有力的网络视频教学平台。</div>
+                        <a href="http://open.163.com" class="more">了解更多 ></a>
+                    </div>
+                </div>
+                <div class="center box">
+                    <div class="icon fl">
+                        <div class="pic" id="pic2"></div>
+                    </div>
+                    <div class="words fl">
+                        <div class="title">云课堂</div>
+                        <div class="content">网易旗下大型在线学习平台，该平台面向学习者提供海量免费、优质课程,创新的个性化学习体验，自由开放的交流互动环境。</div>
+                        <a href="http://study.163.com" class="more">了解更多 ></a>
+                    </div>
+                </div>
+                <div class="right box">
+                    <div class="icon fl">
+                        <div class="pic" id="pic3"></div>
+                    </div>
+                    <div class="words fl">
+                        <div class="title">中国大学MOOC</div>
+                        <div class="content">是爱课程网携手云课堂打造的在线学习平台，每一个有提升愿望的人,都可以在这里学习中国最好的大学课程，学完还能获得认证证书。</div>
+                        <a href="http://www.icourse163.org" class="more">了解更多 ></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pic">
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+        <div class="main clearfix">
+            <div class="w">
+                <div class="content fl">
+                    <ul class="head_btn">
+                        <li class="btn_sj" id="btn_sj">产品设计</li>
+                        <li class="btn_bc" id="btn_bc">编程语言</li>
+                    </ul>
+                    <div class="xuanFuKuang">
+                            <div class="shang">
+                                <div class="pic"></div>
+                                <div class="msg">
+                                    <h2 class="title">混音全揭秘系列</h2>
+                                    <p class="p1 iconfont icon-wutouxiang">510人在学</p>
+                                    <p class="p2">发布者：几分钟网</p>
+                                    <p class="p3">分类：手绘设计</p>
+                                </div>
+                            </div>
+                            <div class="xia">生活中不乏有很多美好的画面，何不用画笔记录下来呢？那么就跟几分钟网一起来记录美好画面吧 ！</div>
+                        </div>
+                    <ul class="lesson">
+                        <li>
+                            <div class="pic"></div>
+                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
+                            <h6>音频帮</h6>
+                            <div class="num iconfont icon-wutouxiang">510</div>
+                            <span>￥800.00</span>
+                        </li>
+                        <li>
+                            <div class="pic"></div>
+                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
+                            <h6>音频帮</h6>
+                            <div class="num iconfont icon-wutouxiang">510</div>
+                            <span>￥800.00</span>
+                        </li>
+                        <li>
+                            <div class="pic"></div>
+                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
+                            <h6>音频帮</h6>
+                            <div class="num iconfont icon-wutouxiang">510</div>
+                            <span>￥800.00</span>
+                        </li>
+                        <li>
+                            <div class="pic"></div>
+                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
+                            <h6>音频帮</h6>
+                            <div class="num iconfont icon-wutouxiang">510</div>
+                            <span>￥800.00</span>
+                        </li>
+                        <li>
+                            <div class="pic"></div>
+                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
+                            <h6>音频帮</h6>
+                            <div class="num iconfont icon-wutouxiang">510</div>
+                            <span>￥800.00</span>
+                        </li>
+                        <li>
+                            <div class="pic"></div>
+                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
+                            <h6>音频帮</h6>
+                            <div class="num iconfont icon-wutouxiang">510</div>
+                            <span>￥800.00</span>
+                        </li>
+                        <li>
+                            <div class="pic"></div>
+                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
+                            <h6>音频帮</h6>
+                            <div class="num iconfont icon-wutouxiang">510</div>
+                            <span>￥800.00</span>
+                        </li>
+                        <li>
+                            <div class="pic"></div>
+                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
+                            <h6>音频帮</h6>
+                            <div class="num iconfont icon-wutouxiang">510</div>
+                            <span>￥800.00</span>
+                        </li>
+                        <li>
+                            <div class="pic"></div>
+                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
+                            <h6>音频帮</h6>
+                            <div class="num iconfont icon-wutouxiang">510</div>
+                            <span>￥800.00</span>
+                        </li>
+                        <li>
+                            <div class="pic"></div>
+                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
+                            <h6>音频帮</h6>
+                            <div class="num iconfont icon-wutouxiang">510</div>
+                            <span>￥800.00</span>
+                        </li>
+                        <li>
+                            <div class="pic"></div>
+                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
+                            <h6>音频帮</h6>
+                            <div class="num iconfont icon-wutouxiang">510</div>
+                            <span>￥800.00</span>
+                        </li>
+                        <li>
+                            <div class="pic"></div>
+                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
+                            <h6>音频帮</h6>
+                            <div class="num iconfont icon-wutouxiang">510</div>
+                            <span>￥800.00</span>
+                        </li>
+                        <li>
+                            <div class="pic"></div>
+                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
+                            <h6>音频帮</h6>
+                            <div class="num iconfont icon-wutouxiang">510</div>
+                            <span>￥800.00</span>
+                        </li>
+                        <li>
+                            <div class="pic"></div>
+                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
+                            <h6>音频帮</h6>
+                            <div class="num iconfont icon-wutouxiang">510</div>
+                            <span>￥800.00</span>
+                        </li>
+                        <li>
+                            <div class="pic"></div>
+                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
+                            <h6>音频帮</h6>
+                            <div class="num iconfont icon-wutouxiang">510</div>
+                            <span>￥800.00</span>
+                        </li>
+                        <li>
+                            <div class="pic"></div>
+                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
+                            <h6>音频帮</h6>
+                            <div class="num iconfont icon-wutouxiang">510</div>
+                            <span>￥800.00</span>
+                        </li>
+                        <li>
+                            <div class="pic"></div>
+                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
+                            <h6>音频帮</h6>
+                            <div class="num iconfont icon-wutouxiang">510</div>
+                            <span>￥800.00</span>
+                        </li>
+                        <li>
+                            <div class="pic"></div>
+                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
+                            <h6>音频帮</h6>
+                            <div class="num iconfont icon-wutouxiang">510</div>
+                            <span>￥800.00</span>
+                        </li>
+                        <li>
+                            <div class="pic"></div>
+                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
+                            <h6>音频帮</h6>
+                            <div class="num iconfont icon-wutouxiang">510</div>
+                            <span>￥800.00</span>
+                        </li>
+                        <li>
+                            <div class="pic"></div>
+                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
+                            <h6>音频帮</h6>
+                            <div class="num iconfont icon-wutouxiang">510</div>
+                            <span>￥800.00</span>
+                        </li>
+                    </ul>
+                    <ul class="foot fr">
+                        <li class="iconfont icon-zuojiantou"></li>
+                        <li class="num">1</li>
+                        <li class="num">2</li>
+                        <li class="num">3</li>
+                        <li class="num">4</li>
+                        <li class="num">5</li>
+                        <li class="num">6</li>
+                        <li class="num">7</li>
+                        <li class="num">8</li>
+                        <li class="iconfont icon-youjiantou1"></li>
+                    </ul>
+                </div>
+                <div class="right fr">
+                    <div class="video">
+                        <div class="top">机构介绍</div>
+                        <div class="shipin">
+                            <p>观看下面的视频来了解吧：</p>
+                            <div class="video_box"></div>
+                            <div class="icon" id="video_icon"></div>
+                        </div>
+                    </div>
+                    <div class="paihang">
+                        <div class="head">最热排行</div>
+                        <ul class="ph">
+                            <li>
+                                <div class="pic fl"></div>
+                                <div class="msg fr">
+                                    <p>舞曲揭秘</p>
+                                    <span class="iconfont icon-wutouxiang">21567</spancc>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="pic fl"></div>
+                                <div class="msg fr">
+                                    <p>舞曲揭秘</p>
+                                    <span class="iconfont icon-wutouxiang">21567</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="pic fl"></div>
+                                <div class="msg fr">
+                                    <p>舞曲揭秘</p>
+                                    <span class="iconfont icon-wutouxiang">21567</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="pic fl"></div>
+                                <div class="msg fr">
+                                    <p>舞曲揭秘</p>
+                                    <span class="iconfont icon-wutouxiang">21567</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="pic fl"></div>
+                                <div class="msg fr">
+                                    <p>舞曲揭秘</p>
+                                    <span class="iconfont icon-wutouxiang">21567</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="pic fl"></div>
+                                <div class="msg fr">
+                                    <p>舞曲揭秘</p>
+                                    <span class="iconfont icon-wutouxiang">21567</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="pic fl"></div>
+                                <div class="msg fr">
+                                    <p>舞曲揭秘</p>
+                                    <span class="iconfont icon-wutouxiang">21567</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="pic fl"></div>
+                                <div class="msg fr">
+                                    <p>舞曲揭秘</p>
+                                    <span class="iconfont icon-wutouxiang">21567</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="pic fl"></div>
+                                <div class="msg fr">
+                                    <p>舞曲揭秘</p>
+                                    <span class="iconfont icon-wutouxiang">21567</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="pic fl"></div>
+                                <div class="msg fr">
+                                    <p>舞曲揭秘</p>
+                                    <span class="iconfont icon-wutouxiang">21567</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="footW">
+                <div class="edu fl">
+                    <h2 class="fl edu">EDU </h2>
+                    <span class="fl xian">|</span>
+                    <h2 class="fl title"> 网易教育产品部</h2>
+                    <p class="p1">©2014 icourse163.org 浙ICP备08114786号-1</p>
+                    <p class="p2">icourses.cn 京ICP备12020869号-2 京公网安备110102000459-2</p>
+                </div>
+                <ul class="link fl">
+                    <li>友情链接：</li>
+                    <li><a href="javascript:">网易公开课</a></li>
+                    <li><a href="javascript:">网易云课堂</a></li>
+                    <li><a href="javascript:">中国大学MOOC</a></li>
+                </ul>
+                <ul class="we fl">
+                    <li>我们:</li>
+                    <li><a href="javascript:">关于</a></li>
+                    <li><a href="javascript:">联系</a></li>
+                    <li><a href="javascript:">关注 </a><span class="iconfont icon-weibo"></span></li>
+                </ul>
+                <ul class="more fr">
+                    <li>更多</li>
+                    <li><a href="javascript:">常见问题</a></li>
+                    <li><a href="javascript:">意见反馈</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="./js/jquery-1.12.4.min.js"></script>
+    <script src="./js/swiper.min.js"></script>
+    <script src="./js/lunbo.js"></script>
+    <!-- <script src="./js/jquery.cookie.js"></script> -->
+    <script src="./js/mainData.js"></script>
+    <script>
+        $(function () {
+            //点击关注显示登陆框
+            $('#login').on('click', function () {
+                $('.login').show();
+            });
+            //登陆注册事件
+            $('#denglu').on('click', function () {
+                console.log(123);
+            });
+            //关闭登陆框
+            $('#close_login').on('click', function () {
+                $('.login').hide();
+            });
+            //点击关注显示视频框
+            $('#video_icon').on('click', function () {
+                $('.black').show();
+            });
+            //关闭视频框
+            $('#close_video').on('click', function () {
+                $('.black').hide();
+            });
+            //失去焦点验证账号是否正确
+            $('#userName').on('blur', function () {
+                var zh = $('#userName').val();
+                if (!(/^\w{6,16}$/.test(zh))) {
+                    $('.h6').show();
+                }
+            });
+            //获得焦点隐藏提示
+            $('#userName').on('focus', function () {
+                $('.h6').hide();
+            });
+            //失去焦点验证密码是否正确
+            $('#password').on('blur', function () {
+                var zh = $('#password').val();
+                if (!(/^[A-Z]\w{5,16}$/.test(zh))) {
+                    $('.h7').show();
+                }
+            });
+            //获得焦点隐藏提示
+            $('#password').on('focus', function () {
+                $('.h7').hide();
+            });
+        });
+    </script>
+</body>
+
+</html>

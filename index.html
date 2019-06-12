@@ -1,471 +1,778 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>网易教育</title>
-    <link rel="stylesheet" href="./css/初始化代码.css">
-    <link rel="stylesheet" href="./css/main.css">
-    <link rel="stylesheet" href="./font/iconfont.css">
-    <link rel="stylesheet" href="./css/swiper.min.css">
-    <base target="_blank" />
+    <title>贪吃蛇大作战</title>
+    <script>
+        //rem布局
+        (function () {
+            var calc = function () {
+                var docElement = document.documentElement;
+                var clientWidthValue = docElement.clientWidth > 1080 ? 1080 : docElement.clientWidth;
+                docElement.style.fontSize = 20 * (clientWidthValue / 350) + 'px';
+            }
+            calc();
+            window.addEventListener('resize', calc);
+        })();
+    </script>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        .wrap {
+            position: fixed;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        .main {
+            height: 100%;
+            width: 100%;
+            /* background-color: #258891; */
+        }
+
+        .statistics {
+            width: 100%;
+            height: 10%;
+            background: linear-gradient(to top, #258891, #c9eeee);
+        }
+
+        .statistics .time {
+            float: left;
+            width: 50%;
+            height: 100%;
+            font-size: 1rem;
+            padding-top: 10px;
+            text-indent: 1rem;
+            box-sizing: border-box;
+            color: red;
+            text-shadow: 2px 2px #e2a0a0;
+
+        }
+
+        .statistics .score {
+            float: left;
+            width: 50%;
+            height: 100%;
+            text-align: left;
+            color: blue;
+            font-size: 1rem;
+            padding-top: 10px;
+            text-indent: 1rem;
+            box-sizing: border-box;
+            text-shadow: 2px 2px #8a90e4;
+        }
+
+        #map {
+            width: 100%;
+            height: 90%;
+            position: relative;
+            background-color: #258891;
+        }
+
+        .map div {
+            border-radius: 10px;
+        }
+
+        /* 爱心样式 */
+        #heart {
+            position: relative;
+            width: 30px;
+            height: 27px;
+        }
+
+        #heart:before,
+        #heart:after {
+            position: absolute;
+            content: "";
+            left: 15px;
+            top: 0;
+            width: 15px;
+            height: 24px;
+            background: red;
+            border-radius: 15px 15px 0 0;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+
+        #heart:after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+
+        .startUI {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 999;
+            background-color: #a239f3;
+            /* display: none; */
+        }
+
+        .startUI .title {
+            text-align: center;
+
+        }
+
+        .startUI h1 {
+            float: left;
+            color: #f0fafc;
+            font-size: 4rem;
+            margin: 1rem 1rem;
+        }
+
+        .startUI h2 {
+            float: left;
+            color: yellow;
+            font-size: 3rem;
+            margin-top: 0;
+            margin-left: 6rem;
+        }
+
+        .endless {
+            /* float: left; */
+            width: 12rem;
+            height: 3rem;
+            margin: 13rem auto 0;
+            border-radius: 1.5rem;
+            background-color: hotpink;
+            text-align: center;
+            font-size: 1.9rem;
+            color: #f0fafc;
+        }
+
+        .endless:hover {
+            background-color: rgb(26, 47, 235);
+        }
+
+        .TimeLimit {
+            /* float: left; */
+            width: 12rem;
+            height: 3rem;
+            margin: 2rem auto;
+            border-radius: 1.5rem;
+            background-color: skyblue;
+            text-align: center;
+            font-size: 1.9rem;
+            color: #f0fafc;
+        }
+
+        .TimeLimit:hover {
+            background-color: rgb(248, 28, 138);
+        }
+
+        .help {
+            width: 12rem;
+            height: 5rem;
+            margin: 0 auto;
+            border-radius: 1rem;
+            background-color: rgb(200, 233, 247);
+            padding: 15px;
+            box-sizing: border-box;
+        }
+
+        .help:hover {
+            background-color: rgb(152, 210, 235);
+        }
+
+        .help p {
+            color: #000;
+            text-align: center;
+        }
+    </style>
 </head>
 
 <body>
     <div class="wrap">
-        <div class="login">
-            <div class="login_web">
-                <span class="cha iconfont icon-cha fr" id="close_login"></span>
-                <p>登录网易云课堂</p>
-                <input type="text" placeholder="账号" class="zh" id="userName">
-                <h6 class="h6">您输入的账号有误！</h6>
-                <input type="password" placeholder="密码" class="pd" id="password">
-                <h6 class="h7">您输入的密码有误！</h6>
-                <input type="button" value="登 录" id="denglu">
+        <!-- 开始界面 -->
+        <div class="startUI">
+            <h1 class="title">贪吃蛇</h1>
+            <h2 class="title">大作战</h2>
+            <div class="endless">无尽模式</div>
+            <div class="TimeLimit">限时模式</div>
+            <div class="help">
+                <p>本游戏使用全面屏手势操作，滑动屏幕即可控制上下左右</p>
             </div>
         </div>
-        <div class="black">
-            <div class="video_zz">
-                <span class="cha iconfont icon-cha fr" id="close_video"></span>
-                <h2>请观看下面的视频</h2>
-                <div class="video_box">
-                    <video src="http://mov.bn.netease.com/open-movie/nos/mp4/2014/12/30/SADQ86F5S_shd.mp4"
-                        controls="controls"></video>
-                </div>
+        <!-- 显示界面 -->
+        <div class="main">
+            <div class="statistics">
+                <div class="time">时间：</div>
+                <div class="score">得分：</div>
             </div>
-        </div>
-        <div class="top">
-            <div class="w">
-                <p class="fl">网易云课堂微专业，帮助你掌握专业技能，令你求职或加薪多一份独特优势！</p>
-                <a href="javascript:" class="green fl"> 立即查看></a>
-                <span class="close fr iconfont icon-cha"> 不再提醒</span>
-            </div>
-        </div>
-        <div class="header">
-            <div class="w">
-                <h1 class="fl edu">EDU </h1>
-                <span class="fl xian">|</span>
-                <h2 class="fl title"> 网易教育产品部</h2>
-                <div class="jiaguan fl">
-                    <button class="fl iconfont icon-jia" id="login">关注</button>
-                    <span>粉丝 45</span>
-                </div>
-                <div class="quguan fl">
-                    <div class="kuang">
-                        <p class="fl iconfont icon-gou1">已关注 </p>
-                        <span>|</span>
-                        <a href="javascript:"> 取消</a>
-                    </div>
-                </div>
-                <ul class="fr">
-                    <li class="fl"><a href="http://open.163.com/">网易公开课</a></li>
-                    <li class="fl"><a href="http://study.163.com">云课堂</a></li>
-                    <li class="fl"><a href="http://www.icourse163.org">中国大学MOOC</a></li>
-                    <li class="fr"><a href="javascript:" class="iconfont icon-fangdajing"></a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="container">
-            <div class="swiper-container">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <a href="http://open.163.com"></a>
-                    </div>
-                    <div class="swiper-slide">
-                        <a href="http://study.163.com"></a>
-                    </div>
-                    <div class="swiper-slide">
-                        <a href="http://www.icourse163.org"></a>
-                    </div>
-                </div>
-                <div class="swiper-pagination"></div>
-            </div>
-        </div>
-        <div class="lesson">
-            <div class="w">
-                <div class="left box">
-                    <div class="icon fl">
-                        <div class="pic"></div>
-                    </div>
-                    <div class="words fl">
-                        <div class="title">网易公开课</div>
-                        <div class="content">推出国内外名校公开课，涉及广泛的学科，名校老师认真讲解深度剖析，网易视频公开课频道搭建起强有力的网络视频教学平台。</div>
-                        <a href="http://open.163.com" class="more">了解更多 ></a>
-                    </div>
-                </div>
-                <div class="center box">
-                    <div class="icon fl">
-                        <div class="pic" id="pic2"></div>
-                    </div>
-                    <div class="words fl">
-                        <div class="title">云课堂</div>
-                        <div class="content">网易旗下大型在线学习平台，该平台面向学习者提供海量免费、优质课程,创新的个性化学习体验，自由开放的交流互动环境。</div>
-                        <a href="http://study.163.com" class="more">了解更多 ></a>
-                    </div>
-                </div>
-                <div class="right box">
-                    <div class="icon fl">
-                        <div class="pic" id="pic3"></div>
-                    </div>
-                    <div class="words fl">
-                        <div class="title">中国大学MOOC</div>
-                        <div class="content">是爱课程网携手云课堂打造的在线学习平台，每一个有提升愿望的人,都可以在这里学习中国最好的大学课程，学完还能获得认证证书。</div>
-                        <a href="http://www.icourse163.org" class="more">了解更多 ></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="pic">
-            <ul>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-            </ul>
-        </div>
-        <div class="main clearfix">
-            <div class="w">
-                <div class="content fl">
-                    <ul class="head_btn">
-                        <li class="btn_sj" id="btn_sj">产品设计</li>
-                        <li class="btn_bc" id="btn_bc">编程语言</li>
-                    </ul>
-                    <div class="xuanFuKuang">
-                            <div class="shang">
-                                <div class="pic"></div>
-                                <div class="msg">
-                                    <h2 class="title">混音全揭秘系列</h2>
-                                    <p class="p1 iconfont icon-wutouxiang">510人在学</p>
-                                    <p class="p2">发布者：几分钟网</p>
-                                    <p class="p3">分类：手绘设计</p>
-                                </div>
-                            </div>
-                            <div class="xia">生活中不乏有很多美好的画面，何不用画笔记录下来呢？那么就跟几分钟网一起来记录美好画面吧 ！</div>
-                        </div>
-                    <ul class="lesson">
-                        <li>
-                            <div class="pic"></div>
-                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
-                            <h6>音频帮</h6>
-                            <div class="num iconfont icon-wutouxiang">510</div>
-                            <span>￥800.00</span>
-                        </li>
-                        <li>
-                            <div class="pic"></div>
-                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
-                            <h6>音频帮</h6>
-                            <div class="num iconfont icon-wutouxiang">510</div>
-                            <span>￥800.00</span>
-                        </li>
-                        <li>
-                            <div class="pic"></div>
-                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
-                            <h6>音频帮</h6>
-                            <div class="num iconfont icon-wutouxiang">510</div>
-                            <span>￥800.00</span>
-                        </li>
-                        <li>
-                            <div class="pic"></div>
-                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
-                            <h6>音频帮</h6>
-                            <div class="num iconfont icon-wutouxiang">510</div>
-                            <span>￥800.00</span>
-                        </li>
-                        <li>
-                            <div class="pic"></div>
-                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
-                            <h6>音频帮</h6>
-                            <div class="num iconfont icon-wutouxiang">510</div>
-                            <span>￥800.00</span>
-                        </li>
-                        <li>
-                            <div class="pic"></div>
-                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
-                            <h6>音频帮</h6>
-                            <div class="num iconfont icon-wutouxiang">510</div>
-                            <span>￥800.00</span>
-                        </li>
-                        <li>
-                            <div class="pic"></div>
-                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
-                            <h6>音频帮</h6>
-                            <div class="num iconfont icon-wutouxiang">510</div>
-                            <span>￥800.00</span>
-                        </li>
-                        <li>
-                            <div class="pic"></div>
-                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
-                            <h6>音频帮</h6>
-                            <div class="num iconfont icon-wutouxiang">510</div>
-                            <span>￥800.00</span>
-                        </li>
-                        <li>
-                            <div class="pic"></div>
-                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
-                            <h6>音频帮</h6>
-                            <div class="num iconfont icon-wutouxiang">510</div>
-                            <span>￥800.00</span>
-                        </li>
-                        <li>
-                            <div class="pic"></div>
-                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
-                            <h6>音频帮</h6>
-                            <div class="num iconfont icon-wutouxiang">510</div>
-                            <span>￥800.00</span>
-                        </li>
-                        <li>
-                            <div class="pic"></div>
-                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
-                            <h6>音频帮</h6>
-                            <div class="num iconfont icon-wutouxiang">510</div>
-                            <span>￥800.00</span>
-                        </li>
-                        <li>
-                            <div class="pic"></div>
-                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
-                            <h6>音频帮</h6>
-                            <div class="num iconfont icon-wutouxiang">510</div>
-                            <span>￥800.00</span>
-                        </li>
-                        <li>
-                            <div class="pic"></div>
-                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
-                            <h6>音频帮</h6>
-                            <div class="num iconfont icon-wutouxiang">510</div>
-                            <span>￥800.00</span>
-                        </li>
-                        <li>
-                            <div class="pic"></div>
-                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
-                            <h6>音频帮</h6>
-                            <div class="num iconfont icon-wutouxiang">510</div>
-                            <span>￥800.00</span>
-                        </li>
-                        <li>
-                            <div class="pic"></div>
-                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
-                            <h6>音频帮</h6>
-                            <div class="num iconfont icon-wutouxiang">510</div>
-                            <span>￥800.00</span>
-                        </li>
-                        <li>
-                            <div class="pic"></div>
-                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
-                            <h6>音频帮</h6>
-                            <div class="num iconfont icon-wutouxiang">510</div>
-                            <span>￥800.00</span>
-                        </li>
-                        <li>
-                            <div class="pic"></div>
-                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
-                            <h6>音频帮</h6>
-                            <div class="num iconfont icon-wutouxiang">510</div>
-                            <span>￥800.00</span>
-                        </li>
-                        <li>
-                            <div class="pic"></div>
-                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
-                            <h6>音频帮</h6>
-                            <div class="num iconfont icon-wutouxiang">510</div>
-                            <span>￥800.00</span>
-                        </li>
-                        <li>
-                            <div class="pic"></div>
-                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
-                            <h6>音频帮</h6>
-                            <div class="num iconfont icon-wutouxiang">510</div>
-                            <span>￥800.00</span>
-                        </li>
-                        <li>
-                            <div class="pic"></div>
-                            <p>混音全揭秘 舞曲实战篇 揭秘音乐揭秘揭秘揭秘</p>
-                            <h6>音频帮</h6>
-                            <div class="num iconfont icon-wutouxiang">510</div>
-                            <span>￥800.00</span>
-                        </li>
-                    </ul>
-                    <ul class="foot fr">
-                        <li class="iconfont icon-zuojiantou"></li>
-                        <li class="num">1</li>
-                        <li class="num">2</li>
-                        <li class="num">3</li>
-                        <li class="num">4</li>
-                        <li class="num">5</li>
-                        <li class="num">6</li>
-                        <li class="num">7</li>
-                        <li class="num">8</li>
-                        <li class="iconfont icon-youjiantou1"></li>
-                    </ul>
-                </div>
-                <div class="right fr">
-                    <div class="video">
-                        <div class="top">机构介绍</div>
-                        <div class="shipin">
-                            <p>观看下面的视频来了解吧：</p>
-                            <div class="video_box"></div>
-                            <div class="icon" id="video_icon"></div>
-                        </div>
-                    </div>
-                    <div class="paihang">
-                        <div class="head">最热排行</div>
-                        <ul class="ph">
-                            <li>
-                                <div class="pic fl"></div>
-                                <div class="msg fr">
-                                    <p>舞曲揭秘</p>
-                                    <span class="iconfont icon-wutouxiang">21567</spancc>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="pic fl"></div>
-                                <div class="msg fr">
-                                    <p>舞曲揭秘</p>
-                                    <span class="iconfont icon-wutouxiang">21567</span>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="pic fl"></div>
-                                <div class="msg fr">
-                                    <p>舞曲揭秘</p>
-                                    <span class="iconfont icon-wutouxiang">21567</span>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="pic fl"></div>
-                                <div class="msg fr">
-                                    <p>舞曲揭秘</p>
-                                    <span class="iconfont icon-wutouxiang">21567</span>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="pic fl"></div>
-                                <div class="msg fr">
-                                    <p>舞曲揭秘</p>
-                                    <span class="iconfont icon-wutouxiang">21567</span>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="pic fl"></div>
-                                <div class="msg fr">
-                                    <p>舞曲揭秘</p>
-                                    <span class="iconfont icon-wutouxiang">21567</span>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="pic fl"></div>
-                                <div class="msg fr">
-                                    <p>舞曲揭秘</p>
-                                    <span class="iconfont icon-wutouxiang">21567</span>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="pic fl"></div>
-                                <div class="msg fr">
-                                    <p>舞曲揭秘</p>
-                                    <span class="iconfont icon-wutouxiang">21567</span>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="pic fl"></div>
-                                <div class="msg fr">
-                                    <p>舞曲揭秘</p>
-                                    <span class="iconfont icon-wutouxiang">21567</span>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="pic fl"></div>
-                                <div class="msg fr">
-                                    <p>舞曲揭秘</p>
-                                    <span class="iconfont icon-wutouxiang">21567</span>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="footer">
-            <div class="footW">
-                <div class="edu fl">
-                    <h2 class="fl edu">EDU </h2>
-                    <span class="fl xian">|</span>
-                    <h2 class="fl title"> 网易教育产品部</h2>
-                    <p class="p1">©2014 icourse163.org 浙ICP备08114786号-1</p>
-                    <p class="p2">icourses.cn 京ICP备12020869号-2 京公网安备110102000459-2</p>
-                </div>
-                <ul class="link fl">
-                    <li>友情链接：</li>
-                    <li><a href="javascript:">网易公开课</a></li>
-                    <li><a href="javascript:">网易云课堂</a></li>
-                    <li><a href="javascript:">中国大学MOOC</a></li>
-                </ul>
-                <ul class="we fl">
-                    <li>我们:</li>
-                    <li><a href="javascript:">关于</a></li>
-                    <li><a href="javascript:">联系</a></li>
-                    <li><a href="javascript:">关注 </a><span class="iconfont icon-weibo"></span></li>
-                </ul>
-                <ul class="more fr">
-                    <li>更多</li>
-                    <li><a href="javascript:">常见问题</a></li>
-                    <li><a href="javascript:">意见反馈</a></li>
-                </ul>
+            <div class="map" id="map">
             </div>
         </div>
     </div>
-    <script src="./js/jquery-1.12.4.min.js"></script>
-    <script src="./js/swiper.min.js"></script>
-    <script src="./js/lunbo.js"></script>
-    <!-- <script src="./js/jquery.cookie.js"></script> -->
-    <script src="./js/mainData.js"></script>
+
     <script>
-        $(function () {
-            //点击关注显示登陆框
-            $('#login').on('click', function () {
-                $('.login').show();
-            });
-            //登陆注册事件
-            $('#denglu').on('click', function () {
-                console.log(123);
-            });
-            //关闭登陆框
-            $('#close_login').on('click', function () {
-                $('.login').hide();
-            });
-            //点击关注显示视频框
-            $('#video_icon').on('click', function () {
-                $('.black').show();
-            });
-            //关闭视频框
-            $('#close_video').on('click', function () {
-                $('.black').hide();
-            });
-            //失去焦点验证账号是否正确
-            $('#userName').on('blur', function () {
-                var zh = $('#userName').val();
-                if (!(/^\w{6,16}$/.test(zh))) {
-                    $('.h6').show();
+        // 找到地图div  生成食物
+        (function (w) {
+
+            var list = [];
+            // 食物的构造函数
+            function Food(width, height, x, y, bgColor) {
+
+                this.width = width || 20;
+                this.height = height || 20;
+                this.x = x || 0;
+                this.y = y || 0;
+                // this.bgColor = bgColor || 'green';
+            }
+
+            // 把视频作为window的变量
+            w.Food = Food;
+
+            // 食物的显示方法
+            Food.prototype.show = function (map) {
+
+                // 生成新食物之前，删掉原来的食物
+                for (var i = 0; i < list.length; i++) {
+
+                    map.removeChild(list[i]);
                 }
-            });
-            //获得焦点隐藏提示
-            $('#userName').on('focus', function () {
-                $('.h6').hide();
-            });
-            //失去焦点验证密码是否正确
-            $('#password').on('blur', function () {
-                var zh = $('#password').val();
-                if (!(/^[A-Z]\w{5,16}$/.test(zh))) {
-                    $('.h7').show();
+                // 清空数组
+                list = [];
+
+                // 用div来代表食物
+                var div = document.createElement('div');
+                div.style.width = this.width + "px";
+                div.style.height = this.height + "px";
+                // div.style.backgroundColor = this.bgColor;
+                div.id = "heart";
+
+                // 算出水平方向有多少个格子 一共40个格子，下标从0开始就是0-39，所以随机时不能包括maxX
+                var maxX = map.offsetWidth / this.width;
+                // 算出垂直方向有多少个格子
+                var maxY = map.offsetHeight / this.height;
+                this.x = Math.floor(Math.random() * maxX);
+                this.y = Math.floor(Math.random() * maxY);
+
+                div.style.left = this.x * this.width + "px";
+                div.style.top = this.y * this.height + "px";
+                div.style.position = "absolute";
+                map.appendChild(div);
+                // 把div存到list，方便下次来先清空
+                list.push(div);
+            }
+
+        })(window);
+
+
+        //Snake
+        (function (w) {
+
+            // 蛇也应该是一个对象，既然是对象，先准备一个构造函数
+            // 蛇所有身体宽高是一样的，所以用一个变量保存所有身体的宽高
+            // 蛇每节其实都是类似于食物的div，只不过有不同的坐标和背景颜色
+            var list = [];
+
+            function Snake(width, height) {
+
+                this.width = width || 20;
+                this.height = height || 20;
+                // 用来保存每节蛇身体的数组
+                // 每一节应该是对象
+                this.body = [{
+                        x: 3,
+                        y: 1,
+                        bgColor: 'red'
+                    },
+                    {
+                        x: 2,
+                        y: 1,
+                        bgColor: '#53b721'
+                    },
+                    {
+                        x: 1,
+                        y: 1,
+                        bgColor: '#f99b37'
+                    },
+                ];
+
+                // 蛇是有方向属性的，默认为right
+                this.direction = 'right';
+            }
+
+            w.Snake = Snake;
+
+            // 原型方法：显示出蛇
+            Snake.prototype.show = function (map) {
+
+                // 先把旧的div删除掉
+                for (var i = 0; i < list.length; i++) {
+
+                    map.removeChild(list[i]);
                 }
-            });
-            //获得焦点隐藏提示
-            $('#password').on('focus', function () {
-                $('.h7').hide();
-            });
-        });
+
+                // 一定要清空数组，否则会报错
+                list = [];
+
+                // 身体有多少节就创建多少个div
+                for (var i = 0; i < this.body.length; i++) {
+
+                    //创建div
+                    var div = document.createElement('div');
+                    div.style.position = "absolute";
+                    div.style.width = this.width + "px";
+                    div.style.height = this.height + "px";
+                    // 设置背景颜色
+                    div.style.backgroundColor = this.body[i].bgColor;
+                    div.style.left = this.body[i].x * this.width + "px";
+                    div.style.top = this.body[i].y * this.height + "px";
+                    //加到地图中
+                    map.appendChild(div);
+
+                    // 对于下次而言，这些div都是旧div,存到list里方便辨认
+                    list.push(div);
+                }
+            }
+
+            // 蛇移动的方法
+            Snake.prototype.move = function () {
+
+                // 倒序遍历每个身体
+                for (var i = this.body.length - 1; i >= 1; i--) {
+
+                    // 让每一节等于上一节的坐标
+                    this.body[i].x = this.body[i - 1].x;
+                    this.body[i].y = this.body[i - 1].y;
+                }
+
+                // 移动蛇头
+                switch (this.direction) {
+
+                    case "right":
+                        this.body[0].x++;
+                        break;
+                    case "left":
+                        this.body[0].x--;
+                        break;
+                    case "top":
+                        this.body[0].y--;
+                        break;
+                    case "bottom":
+                        this.body[0].y++;
+                        break;
+                }
+            }
+        })(window);
+
+
+        //Game 无尽模式
+        (function (w) {
+
+            // 找专业的人调用它的方法帮我们完成
+            // 我想找一个游戏管家，调用它开始游戏的方法，我们就能开始游戏了
+            // 自己封装一个游戏管家,它是不是要能管理到地图，还要有蛇和食物
+
+            function Game(map) {
+
+                this.map = map;
+                this.food = new Food();
+                this.snake = new Snake();
+            }
+
+            w.Game = Game;
+
+            Game.prototype.start = function (w) {
+                var scoreShow = document.querySelector('.score');
+                var timeShow = document.querySelector('.time');
+                timeShow.innerText = '时间：' + '0分'+ '0秒';
+                scoreShow.innerText = '得分：0';
+                //开始计时
+                //计时
+                window.s = 0,
+                    window.m = 0;
+                window.timerID2 = setInterval(function () {
+                    window.s++;
+                    if (s == 60) {
+                        window.m++;
+                        s = 0;
+                    }
+                    timeShow.innerText = '时间：' + window.m + '分' + window.s + '秒';
+                }, 1000);
+
+                // 把食物显示出来
+                this.food.show(this.map);
+                // 把蛇显示出来
+                this.snake.show(this.map);
+                // 先保存一下这里的this，游戏管理者对象
+                // 为了方便计时器里能用到它
+                var that = this;
+
+                window.shang = document.querySelector('.yuan>.top');
+                window.you = document.querySelector('.yuan>.right');
+                window.xia = document.querySelector('.yuan>.bottom');
+                window.zuo = document.querySelector('.yuan>.left');
+                var main = document.querySelector('.main');
+
+                main.ontouchstart = function (e) {
+                    // window.startx = e.touches.pageX + 'px';
+                    // window.starty = e.touches.pageY + 'px';
+
+                    e = e || window.event;
+                    var startx = e.touches[0].pageX;
+                    var starty = e.touches[0].pageY;
+                    console.log('star' + startx, starty);
+
+                    main.ontouchend = function (e) {
+                        var endx = e.changedTouches[0].pageX;
+                        var endy = e.changedTouches[0].pageY;
+                        console.log('end' + endx, endy);
+
+                        if ((Math.abs(endx - startx) > 30) || (Math.abs(endy - starty) > 30)) {
+                            var touchDirection = Math.abs(endx - startx) >= Math.abs(endy -
+                                starty) ? (
+                                endx -
+                                startx > 0 ?
+                                'Right' :
+                                'Left') : (endy - starty > 0 ? 'Down' : 'Up');
+                        }
+
+                        switch (touchDirection) {
+
+                            case 'Left':
+                                if (that.snake.direction != 'right') {
+                                    // 方向改为左
+                                    that.snake.direction = 'left';
+                                }
+                                break;
+                            case 'Up':
+                                if (that.snake.direction != 'bottom') {
+                                    // 方向改为上
+                                    that.snake.direction = 'top';
+                                }
+                                break;
+                            case 'Right':
+
+                                if (that.snake.direction != 'left') {
+                                    // 方向改为右
+                                    that.snake.direction = 'right';
+                                }
+                                break;
+                            case 'Down':
+                                if (that.snake.direction != 'top') {
+                                    // 方向改为下
+                                    that.snake.direction = 'bottom';
+                                }
+                                break;
+                        }
+                    }
+                }
+
+
+
+                var timerID = setInterval(function () {
+                    var scoreShow = document.querySelector('.score');
+                    // 在计时器里this是window
+                    // console.log(this);
+
+                    // 因为计时器里this是window，所以我们要把这里的this改成that，这样才能找到游戏管理者对象
+                    // 让蛇动起来
+                    that.snake.move();
+
+                    //先取出蛇头
+                    var firstUnit = that.snake.body[0];
+
+
+                    // 判断有没有吃到食物 
+                    if (firstUnit.x == that.food.x && firstUnit.y == that.food.y) {
+                        // window.count++;  
+
+                        //让自己原来最后一节的位置上再加一节身体
+                        var lastUnit = that.snake.body[that.snake.body.length - 1];
+                        //生成随机颜色
+                        var a = parseInt(Math.random() * 256);
+                        var b = parseInt(Math.random() * 256);
+                        var c = parseInt(Math.random() * 256);
+                        var randomColor = 'rgb(' + a + ',' + b + ',' + c + ')';
+                        that.snake.body.push({
+                            x: lastUnit.x,
+                            y: lastUnit.y,
+                            bgColor: randomColor
+                        });
+
+                        // 重新生成食物
+                        that.food.show(that.map);
+                        //计分 分数 = 蛇身体的长度 - 3 （最初身体的长度）
+                        window.count = (that.snake.body.length - 3) * 100;
+                        scoreShow.innerText = '得分' + window.count;
+                    }
+                    // 根据最新的蛇的身体重新调用一次show方法
+                    // 就能根据身体重新创建新的div来显示
+                    that.snake.show(that.map)
+
+                    //判断有没有撞到自己的身体
+                    for (var i = 1; i < that.snake.body.length; i++) {
+                        if (firstUnit.x == that.snake.body[i].x && firstUnit.y == that.snake.body[i]
+                            .y) {
+                            window.count = window.count || 0;
+                            scoreShow.innerText = '分数：0';
+                            alert('游戏结束！恭喜你获得了' + window.count + '分，坚持了' + window.m + '分' + window
+                                .s +
+                                '秒');
+                            // 停止计时器
+                            clearInterval(timerID);
+                            clearInterval(window.timerID2);
+                            var startUI = document.querySelector('.startUI'); //找到游戏开始界面
+                            startUI.style.display = 'block'; //返回游戏开始界面
+                            window.count = 0;
+                            return;
+                        }
+                    }
+
+
+                    var maxX = that.map.offsetWidth / that.snake.width;
+                    var maxY = that.map.offsetHeight / that.snake.height;
+                    // 它刚刚移动完就立刻判断有没有出去
+                    // 如果蛇头的x小于0，或者 x大于或等于格子数量 或者 y小于0 或者 y大于或等于最大格子数 代表出去
+                    if (firstUnit.x < 0 || firstUnit.x >= maxX || firstUnit.y < 0 || firstUnit.y >=
+                        maxY) {
+                        window.count = window.count || 0;
+                        scoreShow.innerText = '分数：0';
+                        alert('游戏结束！恭喜你获得了' + window.count + '分，坚持了' + window.m + '分' + window.s + '秒');
+                        // 停止计时器
+                        clearInterval(timerID);
+                        clearInterval(window.timerID2);
+                        //分数清0
+                        window.count = 0;
+
+                        var startUI = document.querySelector('.startUI');
+                        //显示游戏开始界面
+                        startUI.style.display = 'block';
+                        return;
+                    }
+
+                }, 200);
+
+            }
+
+        })(window);
+
+
+        //TimeLimitGame 限时模式
+        (function (w) {
+
+            function TimeLimitGame(map) {
+
+                this.map = map;
+                this.food = new Food();
+                this.snake = new Snake();
+            }
+
+            w.TimeLimitGame = TimeLimitGame;
+
+            TimeLimitGame.prototype.start = function (w) {
+                //显示分数
+                var scoreShow = document.querySelector('.score');
+                scoreShow.innerText = '得分：0';
+                //开始计时
+                var timeShow = document.querySelector('.time');
+                //倒计时60秒
+                window.s = 60;
+                window.timerID2 = setInterval(function () {
+                    window.s--;
+                    if (window.s == 0) {
+                       clearInterval(window.timerID2);
+                    }
+                    timeShow.innerText = '时间：'+window.s + '秒';
+                }, 1000);
+
+                // 把食物显示出来
+                this.food.show(this.map);
+                // 把蛇显示出来
+                this.snake.show(this.map);
+                // 先保存一下这里的this，游戏管理者对象
+                // 为了方便计时器里能用到它
+                var that = this;
+
+                window.shang = document.querySelector('.yuan>.top');
+                window.you = document.querySelector('.yuan>.right');
+                window.xia = document.querySelector('.yuan>.bottom');
+                window.zuo = document.querySelector('.yuan>.left');
+                var main = document.querySelector('.main');
+
+                main.ontouchstart = function (e) {
+                    // window.startx = e.touches.pageX + 'px';
+                    // window.starty = e.touches.pageY + 'px';
+
+                    e = e || window.event;
+                    var startx = e.touches[0].pageX;
+                    var starty = e.touches[0].pageY;
+                    console.log('star' + startx, starty);
+
+                    main.ontouchend = function (e) {
+                        var endx = e.changedTouches[0].pageX;
+                        var endy = e.changedTouches[0].pageY;
+                        console.log('end' + endx, endy);
+
+                        if ((Math.abs(endx - startx) > 30) || (Math.abs(endy - starty) > 30)) {
+                            var touchDirection = Math.abs(endx - startx) >= Math.abs(endy -
+                                starty) ? (
+                                endx -
+                                startx > 0 ?
+                                'Right' :
+                                'Left') : (endy - starty > 0 ? 'Down' : 'Up');
+                        }
+
+                        switch (touchDirection) {
+
+                            case 'Left':
+                                if (that.snake.direction != 'right') {
+                                    // 方向改为左
+                                    that.snake.direction = 'left';
+                                }
+                                break;
+                            case 'Up':
+                                if (that.snake.direction != 'bottom') {
+                                    // 方向改为上
+                                    that.snake.direction = 'top';
+                                }
+                                break;
+                            case 'Right':
+
+                                if (that.snake.direction != 'left') {
+                                    // 方向改为右
+                                    that.snake.direction = 'right';
+                                }
+                                break;
+                            case 'Down':
+                                if (that.snake.direction != 'top') {
+                                    // 方向改为下
+                                    that.snake.direction = 'bottom';
+                                }
+                                break;
+                        }
+                    }
+                }
+
+
+
+                var timerID = setInterval(function () {
+                    var scoreShow = document.querySelector('.score');
+
+                    that.snake.move();
+
+                    //先取出蛇头
+                    var firstUnit = that.snake.body[0];
+
+                    // 判断有没有吃到食物 
+                    if (firstUnit.x == that.food.x && firstUnit.y == that.food.y) {
+                        // window.count++;  
+
+                        //让自己原来最后一节的位置上再加一节身体
+                        var lastUnit = that.snake.body[that.snake.body.length - 1];
+                        //生成随机颜色
+                        var a = parseInt(Math.random() * 256);
+                        var b = parseInt(Math.random() * 256);
+                        var c = parseInt(Math.random() * 256);
+                        var randomColor = 'rgb(' + a + ',' + b + ',' + c + ')';
+                        that.snake.body.push({
+                            x: lastUnit.x,
+                            y: lastUnit.y,
+                            bgColor: randomColor
+                        });
+
+                        // 重新生成食物
+                        that.food.show(that.map);
+                        //计分 分数 = 蛇身体的长度 - 3 （最初身体的长度）
+                        window.count = (that.snake.body.length - 3) * 100;
+                        scoreShow.innerText = '得分' + window.count;
+                    }
+                    // 根据最新的蛇的身体重新调用一次show方法
+                    // 就能根据身体重新创建新的div来显示
+                    that.snake.show(that.map)
+
+                    //判断有没有撞到自己的身体
+                    for (var i = 1; i < that.snake.body.length; i++) {
+                        if (firstUnit.x == that.snake.body[i].x && firstUnit.y == that.snake.body[i]
+                            .y) {
+                            window.count = window.count || 0;
+                            scoreShow.innerText = '分数：0';
+                            var s = 60 - window.s;
+                            alert('游戏结束！恭喜你获得了' + window.count + '分，坚持了' + s + '秒');
+                            // 停止计时器
+                            clearInterval(timerID);
+                            clearInterval(window.timerID2);
+                            var startUI = document.querySelector('.startUI'); //找到游戏开始界面
+                            startUI.style.display = 'block'; //返回游戏开始界面
+                            window.count = 0;
+                            return;
+                        }
+                    }
+
+                    var maxX = that.map.offsetWidth / that.snake.width;
+                    var maxY = that.map.offsetHeight / that.snake.height;
+                    // 它刚刚移动完就立刻判断有没有出去
+                    // 如果蛇头的x小于0，或者 x大于或等于格子数量 或者 y小于0 或者 y大于或等于最大格子数 代表出去
+                    if (firstUnit.x < 0 || firstUnit.x >= maxX || firstUnit.y < 0 || firstUnit.y >=
+                        maxY) {
+                        window.count = window.count || 0;
+                        scoreShow.innerText = '分数：0';
+                        var s = 60 - window.s;
+                        alert('游戏结束！恭喜你获得了' + window.count + '分，坚持了' + s + '秒');
+                        // 停止计时器
+                        clearInterval(timerID);
+                        clearInterval(window.timerID2);
+                        //分数清0
+                        window.count = 0;
+
+                        var startUI = document.querySelector('.startUI');
+                        //显示游戏开始界面
+                        startUI.style.display = 'block';
+                        return;
+                    }
+
+                    if (window.s <= 0) {
+                    window.count = window.count || 0;
+                       alert('游戏结束！恭喜你通关啦！获得了' + window.count + '分，太棒啦！');
+                       clearInterval(timerID);
+                       clearInterval(window.timerID2);
+                       window.count = 0;
+                       var startUI = document.querySelector('.startUI');
+                       startUI.style.display = 'block';
+                       return;
+                    }
+
+                }, 100);
+
+            }
+
+        })(window);
+
+
+        //欢迎界面
+        (function () {
+            var wujin = document.querySelector('.endless');
+            var xianshi = document.querySelector('.TimeLimit');
+            var startUI = document.querySelector('.startUI');
+            //无尽模式
+            wujin.onclick = function () {
+                startUI.style.display = 'none';
+                var map = document.getElementById('map');
+                var game = new Game(map);
+                game.start();
+            }
+            //限时模式
+            xianshi.onclick = function () {
+                startUI.style.display = 'none';
+                var map = document.getElementById('map');
+                var game = new TimeLimitGame(map);
+                game.start();
+            }
+        })();
     </script>
 </body>
 
