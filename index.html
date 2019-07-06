@@ -15,7 +15,11 @@
       margin: 0px;
       padding: 0px;
     }
-
+    body{
+      width: 2000px;
+      height: 2000px;
+      overflow: scroll;
+    }
     .wrap {
       position: fixed;
       left: 0;
@@ -259,7 +263,7 @@
         <div class="song_wrapper" ref="wrapper">
           <!-- <ul class="song_list"> -->
           <transition-group name="list" tag="ul" class="song_list">
-            <li v-for="(item, index) in songList" :key="index" :style="{transitionDelay:index*30+'ms'}" @click="dblplay(item.id,item.album.id,item.mvid)">
+            <li v-for="(item, index) in songList" :key="index" :style="{transitionDelay:index*30+'ms'}" @touch="dblplay(item.id,item.album.id,item.mvid)">
               {{item.name}}--{{item.artists[0].name}}
             </li>
             <!-- </ul> -->
