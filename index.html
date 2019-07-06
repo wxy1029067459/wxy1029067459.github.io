@@ -268,7 +268,7 @@
         <div class="player_con">
           <img src="images/player_bar.png" class="play_bar" :class="{playing:isPlaying}" />
           <!-- 黑胶碟片 -->
-          <img src="images/disc.png" class="disc autoRotate" :class="{playing:isPlaying}" />
+          <img src="images/disc.png" class="disc autoRotate" :class="{playing:isPlaying}" @click="searchMusic" />
           <img :src="picUrl?picUrl:'./images/cover.png'" class="cover autoRotate" :class="{playing:isPlaying}" />
         </div>
         <div class="comment_list" ref="comment">
